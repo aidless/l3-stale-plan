@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this evidence bundle, cite the paper it accompanies."
+title: "What deleting an agent's memory actually removes: evidence from three preregistered iterations"
+authors:
+  - family-names: "Liu"
+    given-names: "Zewen"
+    orcid: "https://orcid.org/0009-0003-2981-9888"
+version: "1.0.0"
+date-released: "2026-11-21"
+repository-code: "https://github.com/aidless"
+abstract: "All per-episode judgements, traces, preregistrations, and deviation log for a three-iteration preregistered study of memory deletion in agents, plus a carrier-sensitivity replication."
