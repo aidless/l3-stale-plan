@@ -555,3 +555,53 @@ print('stratified n_pairs:', d['stratified']['n_pairs'], 'keep/del stale:', d['s
 ```
 
 **边界**：B1 只改标签不改数；B2 把分层从正文估计降为附录描述（正文主估计仍是全样本 +47.3pp / ×1.2622），并显式声明"分层对后处理变量条件化，不作估计量或下界"；B4 把隐喻升为命题并写清缓存类比失效边界（副本是自然语言而非寻址字节、等价按语义判定、无副本计数器 ⇒ invalidate-all 无干净实现），零新实验。页数 12→13 源于附录表。D31 已同步 DEVIATION_L3.md（前缀 977e349780a8445f→09ad3af525ba7eca，^##D=35→36）。
+
+## 7. 外部发布（GitHub Release，2026-11-22）
+
+**仓**：`aidless/l3-stale-plan`（PUBLIC，main），`https://github.com/aidless/l3-stale-plan`
+
+```bash
+gh repo view aidless/l3-stale-plan --json nameWithOwner,visibility,url
+# 期望 PUBLIC / main / https://github.com/aidless/l3-stale-plan
+gh api repos/aidless/l3-stale-plan/git/trees/main?recursive=0 --jq '.tree | length'
+# 期望 22
+gh api repos/aidless/l3-stale-plan/contents/paper/main.tex --jq '.sha'
+git hash-object <repo>/paper/main.tex
+# 期望两边都是 f44382e6c2cea7d535bd990ab85e160b16e906aa
+```
+
+**Release**：`l3-evidence-v1.0.0`
+
+```bash
+gh release view l3-evidence-v1.0.0 --repo aidless/l3-stale-plan \
+  --json tagName,isDraft,isPrerelease,publishedAt,url
+# 期望 isDraft=false / isPrerelease=false / publishedAt 2026-11-22T06:55:30Z
+gh release view l3-evidence-v1.0.0 --repo aidless/l3-stale-plan --json assets \
+  --jq '.assets[] | "\(.name) | \(.size) B"'
+# 期望 4 件：l3-evidence-20261122.tar.gz 1209026 / SHA256SUMS 509785 /
+#          evidence_manifest.json 643231 / l3-source.tar.gz 16607
+```
+
+**回下载独立验证**（发布可信度不靠本地文件，靠从远端取回）：
+
+```bash
+gh release download l3-evidence-v1.0.0 --repo aidless/l3-stale-plan \
+  -p 'l3-evidence-20261122.tar.gz' -D /tmp/l3-dl
+sha256sum /tmp/l3-dl/l3-evidence-20261122.tar.gz
+# 期望 9310d1fe097e725e48be7e7ef764b50608b9e75238dc22b7902409e66b09524b
+mkdir -p /tmp/l3-dl-verify && cd /tmp/l3-dl-verify
+tar xzf /tmp/l3-dl/l3-evidence-20261122.tar.gz
+sha256sum -c /path/to/SHA256SUMS | grep -c OK    # 期望 3012
+sha256sum -c /path/to/SHA256SUMS | grep -c FAILED # 期望 0
+```
+
+**未执行**：Zenodo（`ZENODO_TOKEN` 未设，`zenodo_deposit.py` 仅从环境变量读 token）与 arXiv 投递
+（需作者账号凭据）。需要时：
+
+```bash
+ZENODO_SANDBOX=1 ZENODO_TOKEN=<tok> python3 paper_v2/scripts/zenodo_deposit.py --files \
+  l3-evidence-20261122.tar.gz SHA256SUMS evidence_manifest.json   # 沙箱彩排
+```
+
+**边界**：本条只记录发布动作与可验证性，无新实验/新数字/新结论。仓库与 Release 是**快照**，
+其后的 `DEVIATION_L3.md` / `REPRODUCE_CHECKS.md` 演进不改写 `l3-evidence-v1.0.0` 内的版本。

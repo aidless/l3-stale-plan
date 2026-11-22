@@ -1652,3 +1652,33 @@ D26 把 S_a 写进主稿后，`paper_v2/submission/` 的投稿与证据封包仍
 - `make_submission.py`：TARBALL→l3-v7、MEMBERS 加 tab_sa_strat，source tar 重写、member disk==tar 全 true。
 
 **边界**：B1 只改标签不改数；B2 分层从正文估计降为附录描述，全样本 +47.3pp 主估计不变；B4 把隐喻升为命题并写清类比边界，零新实验。外部发布（GitHub/Zenodo/arXiv 投递）仍需用户当次授权。
+
+## D32 外部发布（GitHub Release，2026-11-22）
+
+用户授权「推」后执行外部发布，未改动任何科学内容、数字或结论。
+
+**发布目标**：新建公开仓 `aidless/l3-stale-plan`（现有 60+ 仓无一是 L3 项目：`paper_joint_mem_forget`
+是另一条「联合记忆遗忘 + 轻量安全协商」投稿线；项目根本身非 git 仓库）。
+
+**仓库内容**：`paper/main.tex`、`paper/main.pdf`、`paper/references.bib`、`paper/tables/*.tex`（6 表）、
+`PREREG_L3.md`、`DEVIATION_L3.md`、`REPRODUCE_CHECKS.md`、`REPRODUCIBILITY.md`、`CITATION.cff`、
+`LICENSE`（文本 CC BY 4.0 / 代码与证据 CC0）、新写 `README.md`、证据包四件。
+首次提交 `b62dead`，push `main`（SSH），远端 22 entries，`paper/main.tex` 远端 blob sha 与本地逐字一致
+（`f44382e6c2cea7d535bd990ab85e160b16e906aa`）。
+
+**Release**：tag `l3-evidence-v1.0.0`，publishedAt `2026-11-22T06:55:30Z`，非 draft、非 prerelease，
+URL `https://github.com/aidless/l3-stale-plan/releases/tag/l3-evidence-v1.0.0`。
+四个附件与本地字节一致：
+- `l3-evidence-20261122.tar.gz` 1209026 B，sha256 `9310d1fe097e725e48be7e7ef764b50608b9e75238dc22b7902409e66b09524b`
+- `SHA256SUMS` 509785 B
+- `evidence_manifest.json` 643231 B
+- `l3-source.tar.gz` 16607 B，sha256 `2bc424f0d0f6230f7f358f2b2154af8da5d1b55eddc40e3f4f5d522ad7839c47`
+
+**回下载独立验证**：从 Release 下载 `l3-evidence-20261122.tar.gz`，sha256 与本地逐字一致；
+解包后 `sha256sum -c SHA256SUMS` 3012 行全部 OK、0 FAILED。
+
+**未执行**：Zenodo（需 `ZENODO_TOKEN`，`zenodo_deposit.py` 只从环境变量读，默认不 publish，可 `--sandbox`
+先彩排）与 arXiv 投递（需作者凭据）均因缺凭据未做；`~/.netrc` 被本机安全网拦，未重试。
+
+**边界**：本节只记录发布动作与其可验证性，不构成新实验、新数字或新结论；本文件在发布后仍继续演进，
+故仓库内 `DEVIATION_L3.md` 与 `l3-evidence-v1.0.0` 证据包内的版本是快照关系，后者不被本节的追加所改写。
